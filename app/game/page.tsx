@@ -215,7 +215,7 @@ export default function GamePage() {
                   Skip Turn
                 </button>
                 <button
-                  onClick={handleNextPlayer}
+                  onClick={() => handleNextPlayer()}
                   disabled={currentDarts.length === 0}
                   className="flex-1 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg"
                 >
