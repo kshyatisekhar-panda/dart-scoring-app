@@ -34,6 +34,7 @@ export default function GamePage() {
   const currentPlayerId = currentGame.players[currentGame.currentPlayerIndex];
   const currentPlayer = getPlayer(currentPlayerId);
   const playerScore = currentGame.scores[currentPlayerId];
+  const winnerPlayer = winner ? getPlayer(winner) : null;
 
   // Player theme colors
   const playerColors = [
@@ -355,9 +356,9 @@ export default function GamePage() {
       )}
 
       {/* Winner Celebration */}
-      {showWinnerCelebration && winner && getPlayer(winner) && (
+      {showWinnerCelebration && winnerPlayer && (
         <WinnerCelebration
-          winner={getPlayer(winner)}
+          winner={winnerPlayer}
           gameState={currentGame}
           onClose={() => {
             setShowWinnerCelebration(false);
