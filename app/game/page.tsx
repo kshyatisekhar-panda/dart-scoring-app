@@ -20,6 +20,7 @@ export default function GamePage() {
   const [selectedPlayerForDetails, setSelectedPlayerForDetails] = useState<string | null>(null);
   const [showWinnerCelebration, setShowWinnerCelebration] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
+  const [showFinishConfirm, setShowFinishConfirm] = useState(false);
 
   useEffect(() => {
     if (!currentGame) {
@@ -109,6 +110,22 @@ export default function GamePage() {
     nextPlayer();
   };
 
+  const handleFinishGame = () => {
+    // Find the player with the best score (lowest remaining for X01)
+    const sortedPlayers = currentGame.players
+      .map(playerId => ({
+        playerId,
+        score: currentGame.scores[playerId]
+      }))
+      .sort((a, b) => a.score.currentScore - b.score.currentScore);
+
+    const bestPlayer = sortedPlayers[0];
+    setWinner(bestPlayer.playerId);
+    endGame(bestPlayer.playerId);
+    setShowFinishConfirm(false);
+    setShowWinnerCelebration(true);
+  };
+
   const calculateTotalThrown = () => {
     return currentDarts.reduce((sum, dart) => sum + dart.score, 0);
   };
@@ -134,6 +151,12 @@ export default function GamePage() {
           </div>
           <div className="flex gap-2 flex-wrap">
             <ExportMenu currentGame={currentGame} getPlayer={getPlayer} />
+            <button
+              onClick={() => setShowFinishConfirm(true)}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
+            >
+              Finish Game
+            </button>
             <button
               onClick={() => pauseGame()}
               className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-semibold"
@@ -353,6 +376,32 @@ export default function GamePage() {
             ...Object.values(currentGame.scores).map(s => s.currentScore)
           )}
         />
+      )}
+
+      {/* Finish Game Confirmation Modal */}
+      {showFinishConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="bg-slate-900 rounded-2xl p-6 max-w-md w-full border border-blue-500/30 shadow-2xl">
+            <h3 className="text-2xl font-bold text-white mb-4">Finish Game?</h3>
+            <p className="text-gray-300 mb-6">
+              Are you sure you want to finish this game? The player with the lowest remaining score will be declared the winner.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleFinishGame}
+                className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors"
+              >
+                Yes, Finish Game
+              </button>
+              <button
+                onClick={() => setShowFinishConfirm(false)}
+                className="flex-1 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Winner Celebration */}
