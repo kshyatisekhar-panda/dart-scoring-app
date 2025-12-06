@@ -1,0 +1,68 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer black ring -->
+  <circle cx="100" cy="100" r="98" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+
+  <!-- Main dartboard sections -->
+  <g id="dartboard-sections">
+    <!-- Red and Green outer segments (alternating) -->
+    <path d="M 100 10 L 115 30 L 105 30 Z" fill="#ef4444"/>
+    <path d="M 100 10 L 85 30 L 95 30 Z" fill="#10b981"/>
+    <path d="M 190 100 L 170 115 L 170 105 Z" fill="#ef4444"/>
+    <path d="M 190 100 L 170 85 L 170 95 Z" fill="#10b981"/>
+    <path d="M 100 190 L 85 170 L 95 170 Z" fill="#ef4444"/>
+    <path d="M 100 190 L 115 170 L 105 170 Z" fill="#10b981"/>
+    <path d="M 10 100 L 30 85 L 30 95 Z" fill="#ef4444"/>
+    <path d="M 10 100 L 30 115 L 30 105 Z" fill="#10b981"/>
+
+    <!-- Additional segments for depth -->
+    <path d="M 145 25 L 155 38 L 145 38 Z" fill="#10b981"/>
+    <path d="M 175 55 L 162 55 L 162 45 Z" fill="#ef4444"/>
+    <path d="M 175 145 L 162 145 L 162 155 Z" fill="#10b981"/>
+    <path d="M 145 175 L 145 162 L 155 162 Z" fill="#ef4444"/>
+    <path d="M 55 175 L 55 162 L 45 162 Z" fill="#10b981"/>
+    <path d="M 25 145 L 38 145 L 38 155 Z" fill="#ef4444"/>
+    <path d="M 25 55 L 38 55 L 38 45 Z" fill="#10b981"/>
+    <path d="M 55 25 L 55 38 L 45 38 Z" fill="#ef4444"/>
+  </g>
+
+  <!-- Triple ring (green) -->
+  <circle cx="100" cy="100" r="70" fill="none" stroke="#10b981" stroke-width="8" opacity="0.9"/>
+
+  <!-- Double ring (red) -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#ef4444" stroke-width="8" opacity="0.9"/>
+
+  <!-- Inner board sections (black and cream alternating) -->
+  <circle cx="100" cy="100" r="60" fill="#2d2d2d" opacity="0.3"/>
+
+  <!-- 25 ring (outer bull) -->
+  <circle cx="100" cy="100" r="20" fill="#10b981" stroke="#047857" stroke-width="2"/>
+
+  <!-- Bullseye (50) -->
+  <circle cx="100" cy="100" r="10" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
+
+  <!-- Radial wire lines -->
+  <g stroke="#666" stroke-width="1" opacity="0.6">
+    <line x1="100" y1="10" x2="100" y2="190"/>
+    <line x1="10" y1="100" x2="190" y2="100"/>
+    <line x1="25" y1="25" x2="175" y2="175"/>
+    <line x1="175" y1="25" x2="25" y2="175"/>
+    <line x1="38" y1="52" x2="162" y2="148"/>
+    <line x1="52" y1="38" x2="148" y2="162"/>
+    <line x1="162" y1="52" x2="38" y2="148"/>
+    <line x1="148" y1="38" x2="52" y2="162"/>
+  </g>
+
+  <!-- Dart -->
+  <g id="dart" transform="translate(130, 70)">
+    <!-- Dart shaft -->
+    <line x1="0" y1="0" x2="-35" y2="35" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <!-- Dart tip -->
+    <circle cx="-35" cy="35" r="3" fill="#dc2626"/>
+    <!-- Dart flight -->
+    <path d="M 5 -5 L 0 0 L 8 8 Z" fill="#fbbf24" opacity="0.8"/>
+    <path d="M 5 5 L 0 0 L 8 -8 Z" fill="#f59e0b" opacity="0.8"/>
+  </g>
+
+  <!-- Decorative outer border -->
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#10b981" stroke-width="1" opacity="0.3"/>
+</svg>
