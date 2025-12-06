@@ -45,7 +45,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <h1 className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 mb-4 drop-shadow-2xl">
+          <h1 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 mb-4 drop-shadow-2xl">
             Dart Scorer
           </h1>
           <p className="text-2xl md:text-3xl text-gray-300 font-light tracking-wide">
