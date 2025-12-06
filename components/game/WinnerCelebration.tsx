@@ -3,14 +3,16 @@
 import { useEffect, useState } from 'react';
 import type { GameState } from '@/types/game';
 import type { Player } from '@/types/player';
+import ExportMenu from './ExportMenu';
 
 interface WinnerCelebrationProps {
   winner: Player;
   gameState: GameState;
   onClose: () => void;
+  getPlayer: (playerId: string) => Player | undefined;
 }
 
-export default function WinnerCelebration({ winner, gameState, onClose }: WinnerCelebrationProps) {
+export default function WinnerCelebration({ winner, gameState, onClose, getPlayer }: WinnerCelebrationProps) {
   const [confetti, setConfetti] = useState<{ id: number; left: number; delay: number; duration: number }[]>([]);
 
   useEffect(() => {
@@ -122,13 +124,20 @@ export default function WinnerCelebration({ winner, gameState, onClose }: Winner
           )}
         </div>
 
-        {/* Action Button */}
-        <button
-          onClick={onClose}
-          className="w-full py-4 bg-white hover:bg-gray-100 text-yellow-600 font-bold rounded-lg text-lg transition-all transform hover:scale-105 shadow-lg"
-        >
-          Back to Home
-        </button>
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 py-4 bg-white hover:bg-gray-100 text-yellow-600 font-bold rounded-lg text-lg transition-all transform hover:scale-105 shadow-lg"
+          >
+            Back to Home
+          </button>
+          <div className="flex-1 w-full">
+            <div className="w-full">
+              <ExportMenu currentGame={gameState} getPlayer={getPlayer} />
+            </div>
+          </div>
+        </div>
       </div>
 
       <style jsx>{`

@@ -233,10 +233,10 @@ export default function ExportMenu({ currentGame, getPlayer }: ExportMenuProps) 
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2 font-semibold"
+        className="w-full px-4 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2 font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
         disabled={isExporting}
       >
         {isExporting ? (

@@ -32,9 +32,9 @@ export default function Home() {
 
       <div className="max-w-4xl w-full space-y-10 text-center relative z-10">
         {/* Hero Section */}
-        <div className="space-y-3 animate-fade-in">
+        <div className="space-y-1 animate-fade-in">
           <div className="inline-block">
-            <div className="mb-2 animate-bounce-slow">
+            <div className="mb-0 animate-bounce-slow">
               <Image
                 src="/dartboard-logo.svg"
                 alt="Dartboard Logo"

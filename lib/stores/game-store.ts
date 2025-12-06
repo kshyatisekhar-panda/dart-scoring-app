@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { GameState, GameSettings, ScoreSegment, Visit, PlayerGameScore, Round } from '@/types/game';
+import { useHistoryStore } from './history-store';
 
 interface GameStore {
   currentGame: GameState | null;
@@ -161,13 +162,18 @@ export const useGameStore = create<GameStore>()(
         const { currentGame } = get();
         if (!currentGame) return;
 
+        const finishedGame = {
+          ...currentGame,
+          status: 'finished' as const,
+          winner: winnerId,
+          finishedAt: Date.now()
+        };
+
+        // Save to history
+        useHistoryStore.getState().addGameToHistory(finishedGame);
+
         set({
-          currentGame: {
-            ...currentGame,
-            status: 'finished',
-            winner: winnerId,
-            finishedAt: Date.now()
-          }
+          currentGame: finishedGame
         });
       },
 

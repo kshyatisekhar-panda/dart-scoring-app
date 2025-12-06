@@ -409,6 +409,7 @@ export default function GamePage() {
         <WinnerCelebration
           winner={winnerPlayer}
           gameState={currentGame}
+          getPlayer={getPlayer}
           onClose={() => {
             setShowWinnerCelebration(false);
             router.push('/');
