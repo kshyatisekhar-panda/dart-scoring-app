@@ -9,9 +9,10 @@ import type { Player } from '@/types/player';
 interface ExportMenuProps {
   currentGame: GameState;
   getPlayer: (playerId: string) => Player | undefined;
+  variant?: 'default' | 'full-width';
 }
 
-export default function ExportMenu({ currentGame, getPlayer }: ExportMenuProps) {
+export default function ExportMenu({ currentGame, getPlayer, variant = 'default' }: ExportMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -232,11 +233,13 @@ export default function ExportMenu({ currentGame, getPlayer }: ExportMenuProps) 
     }
   };
 
+  const isFullWidth = variant === 'full-width';
+
   return (
-    <div className="relative w-full">
+    <div className={`relative ${isFullWidth ? 'w-full' : ''}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2 font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+        className={`${isFullWidth ? 'w-full py-4 text-lg font-bold' : 'py-2'} px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center ${isFullWidth ? 'justify-center' : ''} gap-2 font-semibold transition-all ${isFullWidth ? 'transform hover:scale-105 shadow-lg' : ''}`}
         disabled={isExporting}
       >
         {isExporting ? (

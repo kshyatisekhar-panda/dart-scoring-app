@@ -134,7 +134,7 @@ export default function WinnerCelebration({ winner, gameState, onClose, getPlaye
           </button>
           <div className="flex-1 w-full">
             <div className="w-full">
-              <ExportMenu currentGame={gameState} getPlayer={getPlayer} />
+              <ExportMenu currentGame={gameState} getPlayer={getPlayer} variant="full-width" />
             </div>
           </div>
         </div>
