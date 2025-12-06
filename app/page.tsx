@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -34,10 +35,13 @@ export default function Home() {
         <div className="space-y-6 animate-fade-in">
           <div className="inline-block">
             <div className="mb-4 animate-bounce-slow">
-              <img
+              <Image
                 src="/dartboard-logo.svg"
                 alt="Dartboard Logo"
+                width={160}
+                height={160}
                 className="w-32 h-32 md:w-40 md:h-40 mx-auto drop-shadow-2xl"
+                priority
               />
             </div>
           </div>

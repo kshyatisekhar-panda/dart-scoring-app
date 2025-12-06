@@ -11,7 +11,7 @@ interface DartboardProps {
   size?: number;
 }
 
-export default function Dartboard({ onScore, disabled = false, size = 400 }: DartboardProps) {
+export default function Dartboard({ onScore, disabled = false }: DartboardProps) {
   const [lastHit, setLastHit] = useState<ScoreSegment | null>(null);
   const [hitAnimation, setHitAnimation] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);

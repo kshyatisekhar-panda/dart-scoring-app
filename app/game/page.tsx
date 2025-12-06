@@ -355,9 +355,9 @@ export default function GamePage() {
       )}
 
       {/* Winner Celebration */}
-      {showWinnerCelebration && winner && (
+      {showWinnerCelebration && winner && getPlayer(winner) && (
         <WinnerCelebration
-          winner={getPlayer(winner)!}
+          winner={getPlayer(winner)}
           gameState={currentGame}
           onClose={() => {
             setShowWinnerCelebration(false);
