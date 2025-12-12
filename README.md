@@ -72,23 +72,23 @@ This app brings the authentic dart-scoring experience to your mobile device, hel
 1. Clone the repository or navigate to the project directory
 
 2. Install dependencies:
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 3. Run the development server:
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ### Building for Production
 
-\`\`\`bash
+```bash
 npm run build
 npm start
-\`\`\`
+```
 
 ## Usage
 
@@ -121,7 +121,7 @@ The interactive dartboard follows standard dart board numbering:
 
 ## Project Structure
 
-\`\`\`
+```
 dart-scoring-app/
 ├── app/                    # Next.js app directory
 │   ├── game/              # Game play page
@@ -136,7 +136,7 @@ dart-scoring-app/
 │   └── stores/            # Zustand stores
 ├── types/                 # TypeScript definitions
 └── public/                # Static assets
-\`\`\`
+```
 
 ## Game Rules
 
@@ -337,6 +337,6 @@ Created and maintained by **Kshyatisekhar Panda**
 
 ---
 
-**Live Demo:** [Add your Vercel URL here once deployed]
+**Live Demo:** [dart-scoring-app-k6pc.vercel.app](https://dart-scoring-app-k6pc.vercel.app)
 
 **Repository:** [github.com/kshyatisekhar-panda/dart-scoring-app](https://github.com/kshyatisekhar-panda/dart-scoring-app)
