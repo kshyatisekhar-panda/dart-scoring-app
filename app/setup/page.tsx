@@ -17,13 +17,62 @@ export default function SetupPage() {
   const [newPlayerName, setNewPlayerName] = useState('');
   const [doubleIn, setDoubleIn] = useState(false);
   const [doubleOut, setDoubleOut] = useState(true);
+  const [errors, setErrors] = useState<{ gameName?: string; playerName?: string }>({});
+
+  const validateGameName = (name: string) => {
+    if (name.length === 0) return true; // Optional field
+    if (name.length < 2) return 'Game name must be at least 2 characters';
+    if (name.length > 50) return 'Game name must be less than 50 characters';
+    if (!/^[a-zA-Z0-9\s\-_.,!()]+$/.test(name)) return 'Game name contains invalid characters';
+    return true;
+  };
+
+  const validatePlayerName = (name: string) => {
+    if (name.length === 0) return 'Player name is required';
+    if (name.length < 2) return 'Player name must be at least 2 characters';
+    if (name.length > 30) return 'Player name must be less than 30 characters';
+    if (!/^[a-zA-Z0-9\s\-_.]+$/.test(name)) return 'Player name contains invalid characters';
+    if (players.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+      return 'A player with this name already exists';
+    }
+    return true;
+  };
+
+  const handleGameNameChange = (value: string) => {
+    setGameName(value);
+    const validation = validateGameName(value);
+    setErrors(prev => ({
+      ...prev,
+      gameName: validation === true ? undefined : validation
+    }));
+  };
+
+  const handlePlayerNameChange = (value: string) => {
+    setNewPlayerName(value);
+    if (value.trim()) {
+      const validation = validatePlayerName(value.trim());
+      setErrors(prev => ({
+        ...prev,
+        playerName: validation === true ? undefined : validation
+      }));
+    } else {
+      setErrors(prev => ({ ...prev, playerName: undefined }));
+    }
+  };
 
   const handleAddPlayer = () => {
-    if (newPlayerName.trim()) {
-      const player = addPlayer(newPlayerName.trim());
-      setSelectedPlayers([...selectedPlayers, player.id]);
-      setNewPlayerName('');
+    const trimmedName = newPlayerName.trim();
+    const validation = validatePlayerName(trimmedName);
+
+    if (validation !== true) {
+      setErrors(prev => ({ ...prev, playerName: validation }));
+      return;
     }
+
+    const player = addPlayer(trimmedName);
+    setSelectedPlayers([...selectedPlayers, player.id]);
+    setNewPlayerName('');
+    setErrors(prev => ({ ...prev, playerName: undefined }));
   };
 
   const togglePlayerSelection = (playerId: string) => {
@@ -70,14 +119,21 @@ export default function SetupPage() {
         {/* Game Name */}
         <div className="bg-gray-800 rounded-lg p-6 space-y-4">
           <h2 className="text-xl font-semibold text-white">Game/Tournament Name</h2>
-          <input
-            type="text"
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-            placeholder="e.g., Friday Night Championship, League Round 3..."
-            className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-green-500 focus:outline-none placeholder-gray-400"
-            maxLength={50}
-          />
+          <div>
+            <input
+              type="text"
+              value={gameName}
+              onChange={(e) => handleGameNameChange(e.target.value)}
+              placeholder="e.g., Friday Night Championship, League Round 3..."
+              className={`w-full px-4 py-3 bg-gray-700 text-white rounded-lg border ${
+                errors.gameName ? 'border-red-500' : 'border-gray-600'
+              } focus:border-green-500 focus:outline-none placeholder-gray-400`}
+              maxLength={50}
+            />
+            {errors.gameName && (
+              <p className="text-sm text-red-400 mt-1">{errors.gameName}</p>
+            )}
+          </div>
           <p className="text-sm text-gray-400">Optional - Give your game a memorable name</p>
         </div>
 
@@ -133,21 +189,30 @@ export default function SetupPage() {
           <h2 className="text-xl font-semibold text-white">Select Players</h2>
 
           {/* Add New Player */}
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={newPlayerName}
-              onChange={(e) => setNewPlayerName(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleAddPlayer()}
-              placeholder="Enter player name"
-              className="flex-1 px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-            <button
-              onClick={handleAddPlayer}
-              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
-            >
-              Add
-            </button>
+          <div className="space-y-2">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newPlayerName}
+                onChange={(e) => handlePlayerNameChange(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleAddPlayer()}
+                placeholder="Enter player name"
+                className={`flex-1 px-4 py-2 bg-gray-700 text-white rounded-lg border ${
+                  errors.playerName ? 'border-red-500' : 'border-transparent'
+                } focus:outline-none focus:ring-2 focus:ring-green-500`}
+                maxLength={30}
+              />
+              <button
+                onClick={handleAddPlayer}
+                disabled={!!errors.playerName || !newPlayerName.trim()}
+                className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg"
+              >
+                Add
+              </button>
+            </div>
+            {errors.playerName && (
+              <p className="text-sm text-red-400">{errors.playerName}</p>
+            )}
           </div>
 
           {/* Player List */}
