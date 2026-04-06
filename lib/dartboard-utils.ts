@@ -19,9 +19,9 @@ export function getSegmentNumber(angle: number): number {
   // Normalize angle to 0-360
   let normalizedAngle = ((angle % 360) + 360) % 360;
 
-  // Dartboard starts at 6 (270 degrees) and goes clockwise
-  // Adjust so that 0 degrees points to segment 6
-  normalizedAngle = (normalizedAngle + 90 + HALF_SEGMENT) % 360;
+  // Add half-segment offset so the segment boundary aligns correctly
+  // (atan2 angle 0° = right, which is where segment index 0 is rendered in the SVG)
+  normalizedAngle = (normalizedAngle + HALF_SEGMENT) % 360;
 
   const segmentIndex = Math.floor(normalizedAngle / SEGMENT_ANGLE);
   return DARTBOARD_NUMBERS[segmentIndex];
