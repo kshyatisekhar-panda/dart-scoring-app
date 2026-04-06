@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useGameStore } from '@/lib/stores/game-store';
 import { usePlayerStore } from '@/lib/stores/player-store';
 import Dartboard from '@/components/dartboard/Dartboard';
+import QuickScoreInput from '@/components/dartboard/QuickScoreInput';
 import QuickReference from '@/components/dartboard/QuickReference';
 import RoundDetailsModal from '@/components/game/RoundDetailsModal';
 import ExportMenu from '@/components/game/ExportMenu';
@@ -21,6 +22,12 @@ export default function GamePage() {
   const [showWinnerCelebration, setShowWinnerCelebration] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
   const [showFinishConfirm, setShowFinishConfirm] = useState(false);
+  const [inputMode, setInputMode] = useState<'dartboard' | 'numpad'>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 'numpad' : 'dartboard';
+    }
+    return 'dartboard';
+  });
 
   useEffect(() => {
     if (!currentGame) {
@@ -189,13 +196,44 @@ export default function GamePage() {
                 );
               })()}
 
+              {/* Input Mode Toggle */}
+              <div className="flex w-full max-w-[min(90vw,500px)] lg:max-w-[550px] mb-2 bg-gray-900 rounded-lg p-1">
+                <button
+                  onClick={() => setInputMode('dartboard')}
+                  className={`flex-1 py-2 rounded-md text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                    inputMode === 'dartboard'
+                      ? 'bg-gray-700 text-white shadow'
+                      : 'text-gray-400 hover:text-gray-300'
+                  }`}
+                >
+                  <span>🎯</span> Dartboard
+                </button>
+                <button
+                  onClick={() => setInputMode('numpad')}
+                  className={`flex-1 py-2 rounded-md text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                    inputMode === 'numpad'
+                      ? 'bg-gray-700 text-white shadow'
+                      : 'text-gray-400 hover:text-gray-300'
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" /></svg> Quick Input
+                </button>
+              </div>
+
               <div className="flex justify-center mb-2 w-full px-2">
                 <div className="w-full max-w-[min(90vw,500px)] lg:max-w-[550px]">
-                  <Dartboard
-                    onScore={handleScore}
-                    disabled={currentDarts.length >= 3}
-                    size={500}
-                  />
+                  {inputMode === 'dartboard' ? (
+                    <Dartboard
+                      onScore={handleScore}
+                      disabled={currentDarts.length >= 3}
+                      size={500}
+                    />
+                  ) : (
+                    <QuickScoreInput
+                      onScore={handleScore}
+                      disabled={currentDarts.length >= 3}
+                    />
+                  )}
                 </div>
               </div>
 
