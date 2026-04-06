@@ -134,8 +134,9 @@ export default function Home() {
         </div>
 
         {/* Copyright Footer */}
-        <div className="mt-16 pt-8 border-t border-gray-800 text-gray-500 text-sm">
-          © {new Date().getFullYear()} Kshyatisekhar Panda. All rights reserved.
+        <div className="mt-16 pt-8 border-t border-gray-800 text-gray-500 text-sm space-y-1">
+          <div>© {new Date().getFullYear()} Kshyatisekhar Panda. All rights reserved.</div>
+          <div className="text-gray-600 text-xs">v{process.env.APP_VERSION}</div>
         </div>
       </div>
 
